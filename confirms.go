@@ -42,7 +42,9 @@ func (c *confirms) confirm(confirmation Confirmation) {
 	delete(c.sequencer, c.expecting)
 	c.expecting++
 	for _, l := range c.listeners {
-		l <- confirmation
+		go func() {
+			l <- confirmation
+		}()
 	}
 }
 
